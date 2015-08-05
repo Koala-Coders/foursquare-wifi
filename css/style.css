@@ -164,11 +164,6 @@ legend, button::-moz-focus-inner, input::-moz-focus-inner {
 }
 
 /* End of setup styles */
-body {
-  font-family: "Anonymous Pro";
-  font-size: 10px;
-}
-
 header {
   background: url("../images/bg.jpg") no-repeat;
   background-position: center;
@@ -180,7 +175,7 @@ header {
   flex-direction: column;
 }
 
-h1 {
+header h1 {
   text-align: center;
   font-family: 'Abril Fatface';
   letter-spacing: 4px;
@@ -188,13 +183,13 @@ h1 {
   font-size: 5rem;
 }
 
-input {
+header input {
   background: white;
   border: none;
   color: black;
 }
 
-button {
+header button {
   color: black;
   background: #1abc9c;
   border: none;
@@ -204,11 +199,16 @@ button {
   margin: 0 2%;
 }
 
-button:hover {
+header button:hover {
   background: #fa8072;
 }
 
 header div {
   display: flex;
   flex-direction: row;
+}
+
+body {
+  font-family: "Anonymous Pro";
+  font-size: 10px;
 }
