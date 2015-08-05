@@ -228,27 +228,27 @@ header div {
   flex-direction: row;
 }
 
-body {
-  font-family: "Anonymous Pro";
-  font-size: 10px;
-}
-
 #map-canvas {
   padding: 0.5em 0;
   overflow: hidden;
-  height: 30rem; 
+  height: 30rem;
   width: 70%;
   margin: 0;
-  display:inline-block;
+  display: inline-block;
 }
 
 #location-names {
-  width:28%;
-  display:inline-block;
-  vertical-align:top;
-  font-size:2rem;
+  width: 28%;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 2rem;
 }
 
-p {
-  margin:0;
+#location-names p {
+  margin: 0;
+}
+
+body {
+  font-family: "Anonymous Pro";
+  font-size: 10px;
 }
