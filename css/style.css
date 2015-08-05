@@ -178,15 +178,31 @@ header {
 header h1 {
   text-align: center;
   font-family: 'Abril Fatface';
-  letter-spacing: 4px;
-  margin-top: 0;
+  letter-spacing: 10px;
+  margin: 0;
+  font-size: 5rem;
+  margin-top: -12%;
+  margin-bottom: 6%;
+}
+
+header .fa {
   font-size: 5rem;
 }
 
 header input {
   background: white;
   border: none;
-  color: black;
+  font-size: 1.5rem;
+  width: 21rem;
+  height: 2rem;
+  margin: 2% 0;
+  text-align: center;
+}
+
+header input:focus,
+header input:active {
+  border: #1abc9c 2px solid;
+  outline: none;
 }
 
 header button {
@@ -196,11 +212,15 @@ header button {
   margin-top: 50px;
   font-size: 1.5rem;
   padding: 2% 5%;
-  margin: 0 2%;
+  margin: 4% 3% 0;
 }
 
 header button:hover {
   background: #fa8072;
+}
+
+header .getLocation {
+  width: 15rem;
 }
 
 header div {
