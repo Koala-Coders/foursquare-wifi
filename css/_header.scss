@@ -12,15 +12,31 @@ header{
   h1{
     text-align: center;
     font-family: 'Abril Fatface';
-    letter-spacing: 4px;
-    margin-top: 0;
+    letter-spacing: 10px;
+    margin: 0;
+    font-size: 5rem;
+    margin-top: -12%;
+    margin-bottom: 6%;
+  }
+  
+  .fa{
     font-size: 5rem;
   }
   
   input{
     background: white;
     border: none;
-    color: black;
+    font-size: 1.5rem;
+    width: 21rem;
+    height: 2rem;
+    margin: 2% 0;
+    text-align: center;
+  }
+  
+  input:focus,
+  input:active{
+    border: $teal 2px solid;
+    outline: none;
   }
   
   button{
@@ -30,12 +46,16 @@ header{
     margin-top: 50px;
     font-size: 1.5rem;
     padding: 2% 5%;
-    margin: 0 2%;
+    margin: 4% 3% 0;
     
   }
   
   button:hover{
     background: $pink;
+  }
+  
+  .getLocation{
+    width: 15rem;
   }
   
   div{
