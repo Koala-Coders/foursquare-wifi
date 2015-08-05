@@ -2,14 +2,64 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
 input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer;}button[disabled],input[disabled]{cursor:default;}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0;}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none;}textarea{overflow:auto;vertical-align:top;}table{border-collapse:collapse;border-spacing:0;}body,figure{margin:0;}legend,button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
 
 .clearfix:after {
-   content: " ";
-   visibility: hidden;
-   display: block;
-   height: 0;
-   clear: both;
+  content: " ";
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
 }
 
 *, *:before, *:after {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 /* End of setup styles */
+
+body{
+  font-family: 'Anonymous Pro', ;
+  font-size: 10px;
+  
+}
+header{
+  background: url('../images/bg.jpg') no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h1{
+  text-align: center;
+  font-family: 'Abril Fatface';
+  letter-spacing: 4px;
+  margin-top: 0;
+  font-size: 5rem;
+}
+
+input{
+  background: white;
+  border: none;
+  color: black;
+}
+
+button{
+  color:black;
+  background: #1abc9c;
+  border: none;
+  margin-top: 50px;
+  font-size: 1.5rem;
+  padding: 2% 5%;
+  margin: 0 2%;
+  
+}
+
+button:hover{
+  background: #fa8072;
+}
+
+header div{
+  display: flex;
+  flex-direction: row;
+}
