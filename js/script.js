@@ -70,12 +70,14 @@ function searchVenue() { // find address with keyword search, add marker and cen
 				success: function(venues){
 					venuesList.push(venues.response.groups[0].items);
 					displayInfo(venues.response.groups[0].items);
+					displayVenues();
 				}
 			});
 			
 			function displayInfo(results) { // cycle through results to create markers
 				for (var i = 0; i < results.length; i++) {
 					createMarker(results[i]);
+					
 				}
 			}
 			
@@ -99,9 +101,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 						+ place.venue.url + '<br><br>'
 						+ place.venue.hours.status + '<br>'
 					);
-					
 					infoWindow.open(map, marker);
-
 				});
 			}
 		}
@@ -179,3 +179,10 @@ $(function() {
 //----- INITIALIZE map
 //----------------------//
 google.maps.event.addDomListener(window, 'load', initialize);
+
+displayVenues = function(){
+	for(i=0; i < venuesList[0].length; i++){
+		
+		$('#location-names').append('<div class="venueListItem"><h4>' + venuesList[0][i].venue.name + '</h4><p>' + venuesList[0][i].venue.location.address + '</p><p>' + venuesList[0][i].venue.location. city + ', ' + venuesList[0][i].venue.location.postalCode + '</p></div>');
+	}
+};
