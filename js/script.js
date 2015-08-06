@@ -70,9 +70,9 @@ function searchVenue() { // find address with keyword search, add marker and cen
 				success: function(venues){
 					venuesList.push(venues.response.groups[0].items);
 					displayInfo(venues.response.groups[0].items);
-					displayVenues();
 				}
 			});
+			
 			
 			function displayInfo(results) { // cycle through results to create markers
 				for (var i = 0; i < results.length; i++) {
@@ -109,7 +109,6 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			alert('Unable find location because: ' + status);
 		}
 	});
-	
 }
 
 //----- MARKER controls
@@ -145,6 +144,7 @@ function deleteMarkers() { // Turn off markers and then delete from array
 function searchArea() { // clear previous markers and run address search and wifi search on click of Search button
 	deleteMarkers();
 	searchVenue();
+	displayVenues();
 }
 
 function clearForm() { // clear form values and map markers
@@ -181,8 +181,11 @@ $(function() {
 google.maps.event.addDomListener(window, 'load', initialize);
 
 displayVenues = function(){
+	
 	for(i=0; i < venuesList[0].length; i++){
 		
 		$('#location-names').append('<div class="venueListItem"><h4>' + venuesList[0][i].venue.name + '</h4><p>' + venuesList[0][i].venue.location.address + '</p><p>' + venuesList[0][i].venue.location. city + ', ' + venuesList[0][i].venue.location.postalCode + '</p></div>');
 	}
+	
+	venuesList = [];
 };
