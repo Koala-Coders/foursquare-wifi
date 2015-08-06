@@ -15,6 +15,7 @@ function initialize() { // Load map
 		center: start,
 		zoom: 13
 	});
+	
 }
 
 function searchVenue() { // find address with keyword search, add marker and center map, find venue with Foursquare
@@ -105,6 +106,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			alert('Unable find location because: ' + status);
 		}
 	});
+	
 }
 
 //----- MARKER controls
