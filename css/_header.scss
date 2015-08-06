@@ -39,7 +39,8 @@ header{
     outline: none;
   }
   
-  button{
+  button,
+  a{
     color:black;
     background: $teal;
     border: none;
@@ -47,11 +48,21 @@ header{
     font-size: 1.5rem;
     padding: 2% 5%;
     margin: 4% 3% 0;
-    
+  }
+  
+  a button{
+    margin-top:0;
   }
   
   button:hover{
     background: $pink;
+  }
+  
+  a:hover{
+    background: $pink;
+    button{
+      background: $pink;
+    }
   }
   
   .getLocation{
