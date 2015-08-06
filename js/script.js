@@ -76,7 +76,6 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			function displayInfo(results) { // cycle through results to create markers
 				for (var i = 0; i < results.length; i++) {
 					createMarker(results[i]);
-					infoWindow.open(map, marker);
 				}
 			}
 			
@@ -101,7 +100,8 @@ function searchVenue() { // find address with keyword search, add marker and cen
 						+ place.venue.hours.status + '<br>'
 					);
 					
-					
+					infoWindow.open(map, marker);
+
 				});
 			}
 		}
