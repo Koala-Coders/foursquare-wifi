@@ -102,7 +102,6 @@ function searchVenue() { // find address with keyword search, add marker and cen
 						+ place.venue.hours.status + '<br>'
 					);
 					infoWindow.open(map, marker);
-					
 				});
 			}
 		}
