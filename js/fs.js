@@ -1,8 +1,9 @@
 var foursquare = {};
 
-foursquare.apiUrl = 'https://api.foursquare.com/v2/tips/search';
+foursquare.apiUrl = 'https://api.foursquare.com/v2/venues/explore';
 foursquare.apiKey = 'R0QSI5RXZLR3RNVFLF5GNEI2MVHCPC5XLUOF51TRSQZVC154';
 foursquare.secretKey = 'GUESJ3L0PXMMQAHMOSRDGGVGOEYHJIGZRQ1LO0RSRVSQUXWY';
+foursquare.searchNear = 
 
 foursquare.getInfo = function() {
 // foursquare.getInfo = function(searchQuery) {
@@ -13,15 +14,15 @@ foursquare.getInfo = function() {
 		data: {
 			client_id: foursquare.apiKey,
 			client_secret: foursquare.secretKey,
-			near: "Toronto, ON",
+			near: "toronto",
 			limit: 20,
+			radius: 1000,
 			v: 20140806,
-			// query: "wifi+WiFi+password+wi\-fi+Wi\-fi+WIFI"
-			query: "wifi"
+			query: "free wifi"
 		},
-		success: function(res) {
-			// console.log(res.response.tips);
-			foursquare.displayInfo(res.response.tips);
+		success: function(venues) {
+			console.log(venues.response.groups[0].items);
+			foursquare.displayInfo(venues.response.groups[0].items);
 		} //end success
 	}); // end ajax
 };  // end .getInfo function
@@ -31,11 +32,11 @@ foursquare.displayInfo = function(result) {
 		var $venueName = item.venue.name;
 		console.log($venueName);
 		var $venueAddress = item.venue.location.address;
-		console.log($venueAddress);
+		// console.log($venueAddress);
 		var $venueCity = item.venue.location.city;
-		console.log($venueCity);
+		// console.log($venueCity);
 		var $venuePostalCode = item.venue.location.postalCode;
-		console.log($venuePostalCode);
+		// console.log($venuePostalCode);
 	}); // end of each fuction
 };  // end .displayInfo function
 

@@ -13,9 +13,9 @@
   <header>
     <h1>Where the Wifi at?</h1>
     <i class="fa fa-wifi"></i>
-    <input type="text" name="Enter Location" placeholder="Enter Location">
+    <input id="enter-location" type="text" name="Enter Location" placeholder="Enter Location">
     <div>
-      <button class="search">Search</button>
+      <a href="#map-canvas"><button id="search" class="search" onclick="searchArea()">Search</button></a>
       <button class="getLocation">Get Location</button>
     </div>
   </header>
@@ -29,5 +29,6 @@
   </section>
 </body>
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBzO48uDw9fIb7z1Igyb7WjShZzCyTDxK4"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="js/map.js"></script>
 </html>
