@@ -3,6 +3,7 @@ var geocoder;
 var infoWindow;
 var markers = []; //marker array
 var greenDot = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'; //user location
+var venuesList = [];
 
 //----- LOAD MAP & LEGEND
 //----------------------------//
@@ -15,6 +16,7 @@ function initialize() { // Load map
 		center: start,
 		zoom: 13
 	});
+	
 }
 
 function searchVenue() { // find address with keyword search, add marker and center map, find venue with Foursquare
@@ -66,7 +68,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 					query: 'free wifi'
 				},
 				success: function(venues){
-					console.log(venues.response.groups[0].items);
+					venuesList.push(venues.response.groups[0].items);
 					displayInfo(venues.response.groups[0].items);
 				}
 			});
@@ -74,6 +76,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			function displayInfo(results) { // cycle through results to create markers
 				for (var i = 0; i < results.length; i++) {
 					createMarker(results[i]);
+					infoWindow.open(map, marker);
 				}
 			}
 			
@@ -97,7 +100,8 @@ function searchVenue() { // find address with keyword search, add marker and cen
 						+ place.venue.url + '<br><br>'
 						+ place.venue.hours.status + '<br>'
 					);
-					infoWindow.open(map, marker);
+					
+					
 				});
 			}
 		}
@@ -105,6 +109,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			alert('Unable find location because: ' + status);
 		}
 	});
+	
 }
 
 //----- MARKER controls
