@@ -82,6 +82,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 				}
 			}
 			
+			
 			function createMarker(place) { // create markers for venues
 				var venueLoc = place.venue.location;
 				// console.log(place.venue.location.lat+','+place.venue.location.lng);
@@ -95,49 +96,33 @@ function searchVenue() { // find address with keyword search, add marker and cen
 				
 				infoWindow = new google.maps.InfoWindow(); // create pop-up windows on markers
 				google.maps.event.addListener(marker, 'click', function() {
-					var venueName = place.venue.name;
-					var venueLocAdd = place.venue.location.address;
-					var venueLocCity = place.venue.location.city;
-					var venueLocState = place.venue.location.state;
-					var venuePostal = place.venue.location.postalCode;
-					var venuePhone = place.venue.contact.formattedPhone;
-					var venueUrl = place.venue.url;
-					var venueHours = place.venue.hours.status;
 					
-					if(venueName == undefined){
-						venueName = '';
-					}
-					if(venueLocAdd == undefined){
-						venueLocAdd = '';
-					}
-					if(venueLocCity == undefined){
-						venueLocCity = '';
-					}
-					if(venueLocState == undefined){
-						venueLocState = '';
-					}
-					if(venuePostal == undefined){
-						venuePostal == '';
-					}
-					if(venuePhone == undefined){
-						venuePhone = '';
-					}
-					if (venueUrl == undefined){
-						venueUrl = '';
-					}
-					if(venueHours == undefined){
-						venueHours = '';
-					}
+					var venueObj = {
+						'name':place.venue.name,
+						'address':place.venue.location.address,
+						'city':place.venue.location.city,
+						'state':place.venue.location.state,
+						'postal':place.venue.location.postalCode,
+						'phone':place.venue.contact.formattedPhone,
+						'url':place.venue.url,
+						'hours':place.venue.hours.status
+					};
 					
+					for(var key in venueObj){
+						if (venueObj.hasOwnProperty(key)){
+							if(venueObj[key] == undefined)
+							venueObj[key] = '';
+						}
+					}
 					infoWindow.setContent( //content of infoWindow
 						
-						'<strong class="wifi-name">' + venueName + '</strong><br><br>'
+						'<strong class="wifi-name">' + venueObj.name + '</strong><br><br>'
 						
-						+ venueLocAdd + '<br>'
-						+ venueLocCity + ', ' + venueLocState + ' ' + venuePostal + '<br><br>'
-						+ venuePhone + '<br>'
-						+ venueUrl + '<br><br>'
-						+ venueHours + '<br>'
+						+ venueObj.address + '<br>'
+						+ venueObj.city + ', ' + venueObj.state + ' ' + venueObj.postal + '<br><br>'
+						+ venueObj.phone + '<br>'
+						+ venueObj.url + '<br><br>'
+						+ venueObj.hours + '<br>'
 					);
 					infoWindow.open(map, marker);
 				});
@@ -146,29 +131,27 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			// NEW - moved the display Venues function into the search Venue function to use less code and ensure the Venue List and Map Markers are consistent (e.g. use the same "for" loop)
 			
 			displayVenues = function(place){ // generate venue list "cards"
-			var venueName = place.venue.name;
-			var venueLocAdd = place.venue.location.address;
-			var venueLocCity = place.venue.location.city;
-			var venuePostal = place.venue.location.postalCode;
+			var venueObj = {
+				'name':place.venue.name,
+				'address':place.venue.location.address,
+				'city':place.venue.location.city,
+				'state':place.venue.location.state,
+				'postal':place.venue.location.postalCode,
+				'phone':place.venue.contact.formattedPhone,
+				'url':place.venue.url
+			};
 			
-			
-			if(venueName == undefined){
-				venueName = '';
-			}
-			if(venueLocAdd == undefined){
-				venueLocAdd = '';
-			}
-			if(venueLocCity == undefined){
-				venueLocCity = '';
-			}
-			if(venuePostal == undefined){
-				venuePostal = '';
+			for(var key in venueObj){
+				if (venueObj.hasOwnProperty(key)){
+					if(venueObj[key] == undefined)
+					venueObj[key] = '';
+				}
 			}
 			
-			$('#location-names').append('<div class="venueListItem"><h4>' + venueName + '</h4><p>'
-			+ venueLocAdd + '</p><p>'
-			+ venueLocCity + ', '
-			+ venuePostal + '</p></div>');
+			$('#location-names').append('<div class="venueListItem"><h4>' + venueObj.name + '</h4><p>'
+			+ venueObj.address + '</p><p>'
+			+ venueObj.city + ' '
+			+ venueObj.postal + '</p></div>');
 		};
 		
 		
