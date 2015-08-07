@@ -1,23 +1,34 @@
-#map-canvas {
-  padding: 0.5em 0;
-  overflow: hidden;
-  height: 30rem;
-  width: 70%;
-  margin: 0;
-  display:inline-block;
-}
-
-#location-names {
-  width:28%;
-  display:inline-block;
-  vertical-align:top;
-  font-size:2rem;
-}
-
-#location-names p {
-  margin:0;
-}
-
-.venueListItem{
-  border: $teal 1px solid;
+.map{
+  height:100vh;
+  
+  #map-canvas {
+    padding: 0.5em 0;
+    overflow: hidden;
+    height: 100%;
+    width: 70%;
+    margin: 0;
+    display:inline-block;
+  }
+  
+  #location-names {
+    width:27%;
+    display:inline-block;
+    vertical-align:top;
+    font-size:2rem;
+    margin: 0 1%;
+  }
+  
+  #location-names p {
+    margin:0 0 2% 0;
+    font-size: 1rem;
+  }
+  
+  .venueListItem{
+    border-bottom: $teal 1px solid;
+    
+    h4{
+      margin-bottom: 1%;
+      font-size: 1.5rem;
+    }
+  }
 }

@@ -19,7 +19,7 @@
     </div>
   </header>
   
-  <section>
+  <section class="map">
     <div id="map-canvas"></div>
     <div id="location-names">
     </div>
@@ -32,35 +32,35 @@
 <script>
 
 $(function() {
-
+  
   function showMyPosition(position) {
     $('#location-names').html("Your position is: " + position.coords.latitude + ", " + position.coords.longitude + " (Timestamp: "  + position.timestamp + ")<br />" + $('#location-names').html());
   }
-
+  
   function watchMyPosition(position) {
     $('.result:eq(1)').html("Your position is: " + position.coords.latitude + ", " + position.coords.longitude + " (Timestamp: "  + position.timestamp + ")<br />" + $('.result:eq(1)').html());
   }
-   
+  
   function noLocation(error) {
     $('.result:eq(0)').html("No location info available. Error code: <br>" + JSON.stringify(error));
   }
-   
+  
   $('.getLocation').on('click', function() {
     $.geolocation.get({success: showMyPosition, error: noLocation});
   });
-
+  
   $('#getPositionButtonDef').on('click', function() {
     $.geolocation.get().done(showMyPosition).fail(noLocation);
   });
-
+  
   $('#watchPositionButton').on('click', function() {
     if(typeof myPosition != 'undefined') {
       alert('Already watching, mate!');
     } else {
-      myPosition = $.geolocation.watch({win: watchMyPosition}); 
+      myPosition = $.geolocation.watch({win: watchMyPosition});
     }
   });
-   
+  
   $('#stopButton').on('click', function() {
     if(typeof myPosition != 'undefined') {
       alert('Stopping to watch position (watch id ' + myPosition +')');
@@ -70,7 +70,7 @@ $(function() {
       alert('Nothing to stop at this point. Click the "watch" button first.');
     }
   });
-
+  
 });
 </script>
 </html>
