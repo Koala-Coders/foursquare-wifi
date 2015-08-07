@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link rel="icon" type="image/png" href="images/icon.png">
   <link rel="stylesheet" href="css/style.css">
-  
 </head>
 <body>
   <header>
@@ -29,4 +28,49 @@
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAILPgKgjqyyLRICMe-BpMxPCFjBjAWNqs"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="js/script.js"></script>
+<script src="jQuery-Geolocation-master/jquery.geolocation.js"></script>
+<script>
+
+$(function() {
+
+  function showMyPosition(position) {
+    $('#location-names').html("Your position is: " + position.coords.latitude + ", " + position.coords.longitude + " (Timestamp: "  + position.timestamp + ")<br />" + $('#location-names').html());
+  }
+
+  function watchMyPosition(position) {
+    $('.result:eq(1)').html("Your position is: " + position.coords.latitude + ", " + position.coords.longitude + " (Timestamp: "  + position.timestamp + ")<br />" + $('.result:eq(1)').html());
+  }
+   
+  function noLocation(error) {
+    $('.result:eq(0)').html("No location info available. Error code: <br>" + JSON.stringify(error));
+  }
+   
+  $('.getLocation').on('click', function() {
+    $.geolocation.get({success: showMyPosition, error: noLocation});
+  });
+
+  $('#getPositionButtonDef').on('click', function() {
+    $.geolocation.get().done(showMyPosition).fail(noLocation);
+  });
+
+  $('#watchPositionButton').on('click', function() {
+    if(typeof myPosition != 'undefined') {
+      alert('Already watching, mate!');
+    } else {
+      myPosition = $.geolocation.watch({win: watchMyPosition}); 
+    }
+  });
+   
+  $('#stopButton').on('click', function() {
+    if(typeof myPosition != 'undefined') {
+      alert('Stopping to watch position (watch id ' + myPosition +')');
+      $.geolocation.stop(myPosition);
+      delete(myPosition);
+    } else {
+      alert('Nothing to stop at this point. Click the "watch" button first.');
+    }
+  });
+
+});
+</script>
 </html>
