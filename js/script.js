@@ -39,6 +39,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			markers.push(marker); // push marker to array
 			
 			infoWindow = new google.maps.InfoWindow();
+			infoWindow.close();
 			infoWindow.setContent( // content of infoWindow
 				'<strong class="wifi-name"> YOU ARE HERE </strong><br><br>'
 			);
@@ -101,8 +102,9 @@ function searchVenue() { // find address with keyword search, add marker and cen
 						+ place.venue.contact.formattedPhone + '<br>'
 						+ place.venue.url + '<br><br>'
 						+ place.venue.hours.status + '<br>'
-					);
+					); 
 					infoWindow.open(map, marker);
+
 				});
 			}
 
