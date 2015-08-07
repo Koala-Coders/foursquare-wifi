@@ -51,7 +51,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			var FSURL = 'https://api.foursquare.com/v2/venues/explore'
 			var FSclientID = 'R0QSI5RXZLR3RNVFLF5GNEI2MVHCPC5XLUOF51TRSQZVC154';
 			var FSclientSecret = 'GUESJ3L0PXMMQAHMOSRDGGVGOEYHJIGZRQ1LO0RSRVSQUXWY';
-						
+			
 			$.ajax({  // GET foursquare venue explore
 				url: FSURL,
 				type: 'GET',
@@ -73,7 +73,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 					// console.log(venues);
 				}
 			});
-	
+			
 			
 			function displayInfo(results) { // cycle through results to create markers and venuelist
 				for (var i = 0; i < results.length; i++) {
@@ -95,67 +95,100 @@ function searchVenue() { // find address with keyword search, add marker and cen
 				
 				infoWindow = new google.maps.InfoWindow(); // create pop-up windows on markers
 				google.maps.event.addListener(marker, 'click', function() {
+					var venueName = place.venue.name;
+					var venueLocAdd = place.venue.location.address;
+					var venueLocCity = place.venue.location.city;
+					var venueLocState = place.venue.location.state;
+					var venuePostal = place.venue.location.postalCode;
+					var venuePhone = place.venue.contact.formattedPhone;
+					var venueUrl = place.venue.url;
+					var venueHours = place.venue.hours.status;
+					
+					if(venueName == undefined){
+						venueName = '';
+					}
+					if(venueLocAdd == undefined){
+						venueLocAdd = '';
+					}
+					if(venueLocCity == undefined){
+						venueLocCity = '';
+					}
+					if(venueLocState == undefined){
+						venueLocState = '';
+					}
+					if(venuePhone == undefined){
+						venuePhone = '';
+					}
+					if (venueUrl == undefined){
+						venueUrl = '';
+					}
+					if(venueHours == undefined){
+						venueHours = '';
+					}
+					
 					infoWindow.setContent( //content of infoWindow
-						'<strong class="wifi-name">' + place.venue.name + '</strong><br><br>'
-						+ place.venue.location.address + '<br>'
-						+ place.venue.location.city + ', ' + place.venue.location.state + ' ' + place.venue.location.postalCode + '<br><br>'
-						+ place.venue.contact.formattedPhone + '<br>'
-						+ place.venue.url + '<br><br>'
-						+ place.venue.hours.status + '<br>'
+						
+						'<strong class="wifi-name">' + venueName + '</strong><br><br>'
+						
+						+ venueLocAdd + '<br>'
+						+ venueLocCity + ', ' + venueLocState + ' ' + venuePostal + '<br><br>'
+						+ venuePhone + '<br>'
+						+ venueUrl + '<br><br>'
+						+ venueHours + '<br>'
 					);
 					infoWindow.open(map, marker);
 				});
 			}
-
+			
 			// NEW - moved the display Venues function into the search Venue function to use less code and ensure the Venue List and Map Markers are consistent (e.g. use the same "for" loop)
-
+			
 			displayVenues = function(place){ // generate venue list "cards"
-				$('#location-names').append('<div class="venueListItem"><h4>' + place.venue.name + '</h4><p>' 
-					+ place.venue.location.address + '</p><p>' 
-					+ place.venue.location.city + ', ' 
-					+ place.venue.location.postalCode + '</p></div>');
-			};
-
-
-			// NEW - makes additional calls to FS for more venues using the viewport centre as the LL parameter; need to simplify code to remove second set of codes for JSON call to FS
-
-			function loadVenues() { // empty venue list div and wifi search at the end of a drag
-				$("#location-names").empty();
-				searchMoreVenues();
-			}
-
-			google.maps.event.addListener(map, 'dragend', loadVenues);
-
-			function searchMoreVenues () { // identified LatLng for center of viewport and uses that for call to Foursquare
-				var viewportCentre = map.center.lat()+','+map.center.lng();
-				// console.log(viewportCentre);
-
-				$.ajax({  // GET foursquare venue explore
-					url: FSURL,
-					type: 'GET',
-					dataType: 'json',
-					data: {
-						client_id: FSclientID,
-						client_secret: FSclientSecret,
-						// near: "toronto",
-						// sortByDistance: 1,
-						ll: viewportCentre,
-						limit: 30,
-						radius: 1000,
-						v: 20140806,
-						query: 'free wifi'
-					},
-					success: function(venues){
-						displayInfo(venues.response.groups[0].items);
-					}
-				});
-			}
-
+			$('#location-names').append('<div class="venueListItem"><h4>' + place.venue.name + '</h4><p>'
+			+ place.venue.location.address + '</p><p>'
+			+ place.venue.location.city + ', '
+			+ place.venue.location.postalCode + '</p></div>');
+		};
+		
+		
+		// NEW - makes additional calls to FS for more venues using the viewport centre as the LL parameter; need to simplify code to remove second set of codes for JSON call to FS
+		
+		function loadVenues() { // empty venue list div and wifi search at the end of a drag
+			$("#location-names").empty();
+			searchMoreVenues();
 		}
-		else {
-			alert('Unable find location because: ' + status);
+		
+		google.maps.event.addListener(map, 'dragend', loadVenues);
+		
+		function searchMoreVenues () { // identified LatLng for center of viewport and uses that for call to Foursquare
+			var viewportCentre = map.center.lat()+','+map.center.lng();
+			// console.log(viewportCentre);
+			
+			$.ajax({  // GET foursquare venue explore
+				url: FSURL,
+				type: 'GET',
+				dataType: 'json',
+				data: {
+					client_id: FSclientID,
+					client_secret: FSclientSecret,
+					// near: "toronto",
+					// sortByDistance: 1,
+					ll: viewportCentre,
+					limit: 30,
+					radius: 1000,
+					v: 20140806,
+					query: 'free wifi'
+				},
+				success: function(venues){
+					displayInfo(venues.response.groups[0].items);
+				}
+			});
 		}
-	});
+		
+	}
+	else {
+		alert('Unable find location because: ' + status);
+	}
+});
 }
 
 //----- MARKER controls
