@@ -28,7 +28,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 		if (status == google.maps.GeocoderStatus.OK) {
 			var myLocation = results[0].geometry.location
 			map.setCenter(myLocation);
-			map.setZoom(16);
+			map.setZoom(15);
 			var myLocationLL = myLocation.lat() + "," + myLocation.lng(); // extract latitude and longitude from Geocoder
 			
 			var marker = new google.maps.Marker({ // add marker for My Location
@@ -102,9 +102,8 @@ function searchVenue() { // find address with keyword search, add marker and cen
 						+ place.venue.contact.formattedPhone + '<br>'
 						+ place.venue.url + '<br><br>'
 						+ place.venue.hours.status + '<br>'
-					); 
+					);
 					infoWindow.open(map, marker);
-
 				});
 			}
 
@@ -116,6 +115,41 @@ function searchVenue() { // find address with keyword search, add marker and cen
 					+ place.venue.location.city + ', ' 
 					+ place.venue.location.postalCode + '</p></div>');
 			};
+
+
+			// NEW - makes additional calls to FS for more venues using the viewport centre as the LL parameter; need to simplify code to remove second set of codes for JSON call to FS
+
+			function loadVenues() { // empty venue list div and wifi search at the end of a drag
+				$("#location-names").empty();
+				searchMoreVenues();
+			}
+
+			google.maps.event.addListener(map, 'dragend', loadVenues);
+
+			function searchMoreVenues () { // identified LatLng for center of viewport and uses that for call to Foursquare
+				var viewportCentre = map.center.lat()+','+map.center.lng();
+				// console.log(viewportCentre);
+
+				$.ajax({  // GET foursquare venue explore
+					url: FSURL,
+					type: 'GET',
+					dataType: 'json',
+					data: {
+						client_id: FSclientID,
+						client_secret: FSclientSecret,
+						// near: "toronto",
+						// sortByDistance: 1,
+						ll: viewportCentre,
+						limit: 30,
+						radius: 1000,
+						v: 20140806,
+						query: 'free wifi'
+					},
+					success: function(venues){
+						displayInfo(venues.response.groups[0].items);
+					}
+				});
+			}
 
 		}
 		else {
