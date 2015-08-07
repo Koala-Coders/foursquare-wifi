@@ -16,7 +16,6 @@ function initialize() { // Load map
 		center: start,
 		zoom: 13
 	});
-	
 }
 
 function searchVenue() { // find address with keyword search, add marker and center map, find venue with Foursquare
@@ -51,7 +50,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			var FSURL = 'https://api.foursquare.com/v2/venues/explore'
 			var FSclientID = 'R0QSI5RXZLR3RNVFLF5GNEI2MVHCPC5XLUOF51TRSQZVC154';
 			var FSclientSecret = 'GUESJ3L0PXMMQAHMOSRDGGVGOEYHJIGZRQ1LO0RSRVSQUXWY';
-			
+						
 			$.ajax({  // GET foursquare venue explore
 				url: FSURL,
 				type: 'GET',
@@ -68,22 +67,24 @@ function searchVenue() { // find address with keyword search, add marker and cen
 					query: 'free wifi'
 				},
 				success: function(venues){
-					venuesList.push(venues.response.groups[0].items);
 					displayInfo(venues.response.groups[0].items);
+					// console.log(venues.response.groups[0].items);
+					// console.log(venues);
 				}
 			});
+	
 			
-			
-			function displayInfo(results) { // cycle through results to create markers
+			function displayInfo(results) { // cycle through results to create markers and venuelist
 				for (var i = 0; i < results.length; i++) {
 					createMarker(results[i]);
-					
+					displayVenues(results[i]); // NEW - place the displayVenues function to run with the same 'for' loop
 				}
 			}
 			
 			function createMarker(place) { // create markers for venues
 				var venueLoc = place.venue.location;
 				// console.log(place.venue.location.lat+','+place.venue.location.lng);
+				// console.log(place);
 				
 				var marker = new google.maps.Marker({ // create markers
 					map: map,
@@ -104,6 +105,16 @@ function searchVenue() { // find address with keyword search, add marker and cen
 					infoWindow.open(map, marker);
 				});
 			}
+
+			// NEW - moved the display Venues function into the search Venue function to use less code and ensure the Venue List and Map Markers are consistent (e.g. use the same "for" loop)
+
+			displayVenues = function(place){ // generate venue list "cards"
+				$('#location-names').append('<div class="venueListItem"><h4>' + place.venue.name + '</h4><p>' 
+					+ place.venue.location.address + '</p><p>' 
+					+ place.venue.location.city + ', ' 
+					+ place.venue.location.postalCode + '</p></div>');
+			};
+
 		}
 		else {
 			alert('Unable find location because: ' + status);
@@ -132,11 +143,10 @@ function setAllMap(map) { // Place markers on map
 //----- BUTTONS
 //----------------------//
 
-
-function searchArea() { // clear previous markers and run address search and wifi search on click of Search button
+function searchArea() { // clear previous markers, empty venue list div and run address search and wifi search on click of Search button
 	deleteMarkers();
+	$("#location-names").empty(); // NEW - added .empty() jQuery to clear venue list before adding new results
 	searchVenue();
-	displayVenues();
 }
 
 function clearForm() { // clear form values and map markers
@@ -150,6 +160,8 @@ $('#enter-location').keypress(function (e) { // pressing Enter on Address textbo
 		return false;
 	}
 });
+
+
 
 //----- SMOOTH SCROLL
 //----------------------//
@@ -171,13 +183,3 @@ $(function() {
 //----- INITIALIZE map
 //----------------------//
 google.maps.event.addDomListener(window, 'load', initialize);
-
-displayVenues = function(){
-	
-	for(i=0; i < venuesList[0].length; i++){
-		
-		$('#location-names').append('<div class="venueListItem"><h4>' + venuesList[0][i].venue.name + '</h4><p>' + venuesList[0][i].venue.location.address + '</p><p>' + venuesList[0][i].venue.location. city + ', ' + venuesList[0][i].venue.location.postalCode + '</p></div>');
-	}
-	
-	venuesList = [];
-};
