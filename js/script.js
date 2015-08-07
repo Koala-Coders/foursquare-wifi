@@ -49,8 +49,8 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			//--------------------------------------//
 			
 			var FSURL = 'https://api.foursquare.com/v2/venues/explore'
-			var FSclientID = 'XPLJELMLQRL45HGE13Z0ENWJ0M50GCZCXMCGSCF1VO5EHEOM';
-			var FSclientSecret = '0EFGZ1LKHUBOYBQA2T2TSANKOU40A5SDSGIFPLDQVIIY1HSQ';
+			var FSclientID = 'R0QSI5RXZLR3RNVFLF5GNEI2MVHCPC5XLUOF51TRSQZVC154';
+			var FSclientSecret = 'GUESJ3L0PXMMQAHMOSRDGGVGOEYHJIGZRQ1LO0RSRVSQUXWY';
 			
 			$.ajax({  // GET foursquare venue explore
 				url: FSURL,
@@ -132,14 +132,6 @@ function setAllMap(map) { // Place markers on map
 //----- BUTTONS
 //----------------------//
 
-function clearMarkers() { // Turn off markers on map
-	setAllMap(null);
-}
-
-function deleteMarkers() { // Turn off markers and then delete from array
-	clearMarkers();
-	markers = [];
-}
 
 function searchArea() { // clear previous markers and run address search and wifi search on click of Search button
 	deleteMarkers();
