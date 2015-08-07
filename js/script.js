@@ -116,6 +116,9 @@ function searchVenue() { // find address with keyword search, add marker and cen
 					if(venueLocState == undefined){
 						venueLocState = '';
 					}
+					if(venuePostal == undefined){
+						venuePostal == '';
+					}
 					if(venuePhone == undefined){
 						venuePhone = '';
 					}
@@ -143,10 +146,29 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			// NEW - moved the display Venues function into the search Venue function to use less code and ensure the Venue List and Map Markers are consistent (e.g. use the same "for" loop)
 			
 			displayVenues = function(place){ // generate venue list "cards"
-			$('#location-names').append('<div class="venueListItem"><h4>' + place.venue.name + '</h4><p>'
-			+ place.venue.location.address + '</p><p>'
-			+ place.venue.location.city + ', '
-			+ place.venue.location.postalCode + '</p></div>');
+			var venueName = place.venue.name;
+			var venueLocAdd = place.venue.location.address;
+			var venueLocCity = place.venue.location.city;
+			var venuePostal = place.venue.location.postalCode;
+			
+			
+			if(venueName == undefined){
+				venueName = '';
+			}
+			if(venueLocAdd == undefined){
+				venueLocAdd = '';
+			}
+			if(venueLocCity == undefined){
+				venueLocCity = '';
+			}
+			if(venuePostal == undefined){
+				venuePostal = '';
+			}
+			
+			$('#location-names').append('<div class="venueListItem"><h4>' + venueName + '</h4><p>'
+			+ venueLocAdd + '</p><p>'
+			+ venueLocCity + ', '
+			+ venuePostal + '</p></div>');
 		};
 		
 		
