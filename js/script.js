@@ -31,7 +31,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 		if (status == google.maps.GeocoderStatus.OK) {
 			var myLocation = results[0].geometry.location
 			var myLocationLL = myLocation.lat() + "," + myLocation.lng(); // extract latitude and longitude from Geocoder
-			setUpMap(myLocationLL);
+			setUpMap(myLocation.lat(), myLocation.lng());
 		}
 		else {
 			alert('Unable find location because: ' + status);
@@ -39,14 +39,15 @@ function searchVenue() { // find address with keyword search, add marker and cen
 	});
 }
 
-function setUpMap(location) {
-	map.setCenter(location);
+function setUpMap(lat, lng) {
+	var location = (lat + "," + lng);
+	map.setCenter(new google.maps.LatLng(lat, lng));
 	map.setZoom(15);
 	
 	var marker = new google.maps.Marker({ // add marker for My Location
 		map: map,
 		icon: greenDot,
-		position: location
+		position: new google.maps.LatLng(lat, lng)
 	});
 	markers.push(marker); // push marker to array
 	infoWindow = new google.maps.InfoWindow();
@@ -242,11 +243,11 @@ $('.getLocation').on('click', geoLocate());
 function geoLocate() {
   
   function showMyPosition(position) {
-    $('#location-names').html("Your position is: " + position.coords.latitude + ", " + position.coords.longitude + " (Timestamp: "  + position.timestamp + ")<br />" + $('#location-names').html());
+    // $('#location-names').html("Your position is: " + position.coords.latitude + ", " + position.coords.longitude + " (Timestamp: "  + position.timestamp + ")<br />" + $('#location-names').html());
   	var llat = position.coords.latitude;
   	var llong = position.coords.longitude;
   	var myLocationLL=(llat + "," + llong);
-  	setUpMap(myLocationLL);
+  	setUpMap(llat, llong);
   }
   
   function noLocation(error) {
