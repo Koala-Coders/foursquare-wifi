@@ -4,6 +4,9 @@ var infoWindow;
 var markers = []; //marker array
 var greenDot = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'; //user location
 var venuesList = [];
+var FSURL = 'https://api.foursquare.com/v2/venues/explore'
+var FSclientID = 'R0QSI5RXZLR3RNVFLF5GNEI2MVHCPC5XLUOF51TRSQZVC154';
+var FSclientSecret = 'GUESJ3L0PXMMQAHMOSRDGGVGOEYHJIGZRQ1LO0RSRVSQUXWY';
 
 //----- LOAD MAP & LEGEND
 //----------------------------//
@@ -27,31 +30,34 @@ function searchVenue() { // find address with keyword search, add marker and cen
 		
 		if (status == google.maps.GeocoderStatus.OK) {
 			var myLocation = results[0].geometry.location
-			map.setCenter(myLocation);
-			map.setZoom(15);
 			var myLocationLL = myLocation.lat() + "," + myLocation.lng(); // extract latitude and longitude from Geocoder
-			
-			var marker = new google.maps.Marker({ // add marker for My Location
-				map: map,
-				icon: greenDot,
-				position: myLocation
-			});
-			markers.push(marker); // push marker to array
-			
-			infoWindow = new google.maps.InfoWindow();
-			infoWindow.close();
-			infoWindow.setContent( // content of infoWindow
-				'<strong class="wifi-name"> YOU ARE HERE </strong><br><br>'
-			);
-			infoWindow.open(map, marker);
+			setUpMap(myLocationLL);
+		}
+		else {
+			alert('Unable find location because: ' + status);
+		}
+	});
+}
+
+function setUpMap(location) {
+	map.setCenter(location);
+	map.setZoom(15);
+	
+	var marker = new google.maps.Marker({ // add marker for My Location
+		map: map,
+		icon: greenDot,
+		position: location
+	});
+	markers.push(marker); // push marker to array
+	infoWindow = new google.maps.InfoWindow();
+	infoWindow.close();
+	infoWindow.setContent( // content of infoWindow
+		'<strong class="wifi-name"> YOU ARE HERE </strong><br><br>'
+	);
+	infoWindow.open(map, marker);
 			
 			//------- FOURSQUARE venue explore
 			//--------------------------------------//
-			
-			var FSURL = 'https://api.foursquare.com/v2/venues/explore'
-			var FSclientID = 'R0QSI5RXZLR3RNVFLF5GNEI2MVHCPC5XLUOF51TRSQZVC154';
-			var FSclientSecret = 'GUESJ3L0PXMMQAHMOSRDGGVGOEYHJIGZRQ1LO0RSRVSQUXWY';
-			
 			$.ajax({  // GET foursquare venue explore
 				url: FSURL,
 				type: 'GET',
@@ -59,9 +65,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 				data: {
 					client_id: FSclientID,
 					client_secret: FSclientSecret,
-					// near: "toronto",
-					// sortByDistance: 1,
-					ll: myLocationLL,
+					ll: location,
 					limit: 30,
 					radius: 1000,
 					v: 20140806,
@@ -69,10 +73,10 @@ function searchVenue() { // find address with keyword search, add marker and cen
 				},
 				success: function(venues){
 					displayInfo(venues.response.groups[0].items);
-					// console.log(venues.response.groups[0].items);
-					// console.log(venues);
 				}
 			});
+			google.maps.event.addListener(map, 'dragend', loadVenues);
+		};
 			
 			
 			function displayInfo(results) { // cycle through results to create markers and venuelist
@@ -85,15 +89,11 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			
 			function createMarker(place) { // create markers for venues
 				var venueLoc = place.venue.location;
-				// console.log(place.venue.location.lat+','+place.venue.location.lng);
-				// console.log(place);
-				
 				var marker = new google.maps.Marker({ // create markers
 					map: map,
 					position: venueLoc,
 				});
 				markers.push(marker); // push marker to array
-				
 				infoWindow = new google.maps.InfoWindow(); // create pop-up windows on markers
 				google.maps.event.addListener(marker, 'click', function() {
 					
@@ -162,7 +162,7 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			searchMoreVenues();
 		}
 		
-		google.maps.event.addListener(map, 'dragend', loadVenues);
+		// google.maps.event.addListener(map, 'dragend', loadVenues);
 		
 		function searchMoreVenues () { // identified LatLng for center of viewport and uses that for call to Foursquare
 			var viewportCentre = map.center.lat()+','+map.center.lng();
@@ -175,8 +175,6 @@ function searchVenue() { // find address with keyword search, add marker and cen
 				data: {
 					client_id: FSclientID,
 					client_secret: FSclientSecret,
-					// near: "toronto",
-					// sortByDistance: 1,
 					ll: viewportCentre,
 					limit: 30,
 					radius: 1000,
@@ -189,12 +187,12 @@ function searchVenue() { // find address with keyword search, add marker and cen
 			});
 		}
 		
-	}
-	else {
-		alert('Unable find location because: ' + status);
-	}
-});
-}
+	// }
+// 	else {
+// 		alert('Unable find location because: ' + status);
+// 	}
+// });
+// }
 
 //----- MARKER controls
 //--------------------------//
@@ -235,7 +233,30 @@ $('#enter-location').keypress(function (e) { // pressing Enter on Address textbo
 	}
 });
 
+// geo-location on-click listener //
+$('.getLocation').on('click', geoLocate());
 
+
+// jQuery geo-location //
+
+function geoLocate() {
+  
+  function showMyPosition(position) {
+    $('#location-names').html("Your position is: " + position.coords.latitude + ", " + position.coords.longitude + " (Timestamp: "  + position.timestamp + ")<br />" + $('#location-names').html());
+  	var llat = position.coords.latitude;
+  	var llong = position.coords.longitude;
+  	var myLocationLL=(llat + "," + llong);
+  	setUpMap(myLocationLL);
+  }
+  
+  function noLocation(error) {
+    $('.result:eq(0)').html("No location info available. Error code: <br>" + JSON.stringify(error));
+  }
+  
+  $('.getLocation').on('click', function() {
+    $.geolocation.get({success: showMyPosition, error: noLocation});
+  });
+};
 
 //----- SMOOTH SCROLL
 //----------------------//
