@@ -35,7 +35,15 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    transition: 1000ms 0ms;
     
+    &:hover {
+    background-color: #1abc9c;
+    color: #fff;
+    padding-left: 2rem;
+    cursor: pointer;
+    transition: 1000ms 0ms;
+    }
     
     h4{
       margin:0;
