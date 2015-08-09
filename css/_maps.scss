@@ -38,17 +38,52 @@
     transition: 1000ms 0ms;
     
     &:hover {
-    background-color: #1abc9c;
-    color: #fff;
-    padding-left: 2rem;
-    cursor: pointer;
-    transition: 1000ms 0ms;
+      background-color: #1abc9c;
+      color: #fff;
+      padding-left: 2rem;
+      cursor: pointer;
+      transition: 1000ms 0ms;
     }
     
     h4{
       margin:0;
       margin-bottom: 1%;
       font-size: 1.5rem;
+    }
+  }
+  
+  @media(max-width: 1100px){
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    
+    
+    #map-canvas{
+      width: 65%;
+    }
+    
+    #location-names{
+      width: 33%;
+    }
+  }
+  
+  @media(max-width: 800px){
+    flex-direction: column;
+    
+    #map-canvas{
+      width:100%;
+    }
+    
+    #location-names{
+      display: flex;
+      flex-direction: column;
+      // flex-wrap: wrap;
+      width:100%;
+    }
+    
+    .venueListItem{
+      align-items: center;
     }
   }
 }
