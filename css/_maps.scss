@@ -33,7 +33,15 @@
     display: -ms-flex;
     display: -o-flex;
     display: flex;
+    -webkit-justify-content:center;
+    -moz-justify-content:center;
+    -ms-justify-content:center;
+    -o-justify-content:center;
     justify-content: center;
+    -webkit-flex-direction:column;
+    -moz-flex-direction:column;
+    -ms-flex-direction:column;
+    -o-flex-direction:column;
     flex-direction: column;
     transition: 1000ms 0ms;
     
@@ -53,9 +61,25 @@
   }
   
   @media(max-width: 1100px){
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
     display: flex;
+    -webkit-justify-content:center;
+    -moz-justify-content:center;
+    -ms-justify-content:center;
+    -o-justify-content:center;
     justify-content: center;
+    -webkit-justify-content:center;
+    -moz-flex-direction:row;
+    -ms-flex-direction:row;
+    -o-flex-direction:row;
     flex-direction: row;
+    -webkit-align-items:center;
+    -moz-align-items:center;
+    -ms-align-items:center;
+    -o-align-items:center;
     align-items: center;
     
     
@@ -69,6 +93,10 @@
   }
   
   @media(max-width: 800px){
+    -webkit-flex-direction:column;
+    -moz-flex-direction:column;
+    -ms-flex-direction:column;
+    -o-flex-direction:column;
     flex-direction: column;
     
     #map-canvas{
@@ -76,14 +104,24 @@
     }
     
     #location-names{
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: -ms-flex;
+      display: -o-flex;
       display: flex;
+      -webkit-flex-direction:column;
+      -moz-flex-direction:column;
+      -ms-flex-direction:column;
+      -o-flex-direction:column;
       flex-direction: column;
-      // flex-wrap: wrap;
       width:100%;
     }
     
     .venueListItem{
-      align-items: center;
+      -webkit-align-items:center;
+      -moz-align-items:center;
+      -ms-align-items:center;
+      -o-align-items:center;
+      align-items: center;    }
     }
   }
-}
